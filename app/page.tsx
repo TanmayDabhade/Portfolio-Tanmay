@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Star, Folder, Command, Download, ChevronRight } from "lucide-react";
@@ -17,7 +18,7 @@ export default function Portfolio() {
 
   // Spotlight cursor
   const [spot, setSpot] = useState({ x: 0, y: 0 });
-  const rootRef = useRef<HTMLMainElement | null>(null);
+  const rootRef = useRef<HTMLMapElement | null>(null);
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
