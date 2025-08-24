@@ -18,6 +18,7 @@ interface IconLinkProps { href: string; icon: IconType; children: ReactNode }
 interface TinyLinkProps { href: string; children: ReactNode }
 interface ExpRowProps { role: string; bullets: string[] }
 interface Repo { id?: number; name: string; description?: string | null; stars: number; url: string; lang?: string | null }
+interface GitHubRepo { id: number; fork: boolean; name: string; description: string | null; stargazers_count: number; html_url: string; language: string | null }
 
 export default function Portfolio() {
   const { scrollYProgress } = useScroll();
@@ -251,10 +252,18 @@ function Projects() {
       try {
         const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`);
         const data = await res.json();
-        const filtered: Repo[] = (Array.isArray(data) ? data : [])
-          .filter((r: any) => !r.fork)
-          .map((r: any) => ({ id: r.id, name: r.name, description: r.description, stars: r.stargazers_count, url: r.html_url, lang: r.language }))
-          .sort((a: Repo, b: Repo) => (b.stars || 0) - (a.stars || 0));
+        const raw: GitHubRepo[] = Array.isArray(data) ? (data as GitHubRepo[]) : [];
+        const filtered: Repo[] = raw
+          .filter((r) => !r.fork)
+          .map((r) => ({
+            id: r.id,
+            name: r.name,
+            description: r.description ?? undefined,
+            stars: r.stargazers_count ?? 0,
+            url: r.html_url,
+            lang: r.language ?? undefined,
+          }))
+          .sort((a, b) => (b.stars || 0) - (a.stars || 0));
         setRepos(filtered);
       } catch (e) {
         console.error(e);
