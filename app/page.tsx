@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, ReactNode } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Star, Folder, Command, Download, ChevronRight } from "lucide-react";
 
@@ -11,6 +10,13 @@ import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Star, Folder, Command
 
 const GH_USER = "TanmayDabhade";
 const RESUME_URL = "/Tanmay_Dabhade_SWE_Intern.pdf"; // TODO: replace with your hosted URL
+
+// Types
+type IconType = React.ComponentType<{ className?: string }>;
+interface IconLinkProps { href: string; icon: IconType; children: ReactNode }
+interface TinyLinkProps { href: string; children: ReactNode }
+interface ExpRowProps { role: string; bullets: string[] }
+interface Repo { id?: number; name: string; description?: string | null; stars: number; url: string; lang?: string | null }
 
 export default function Portfolio() {
   const { scrollYProgress } = useScroll();
@@ -30,7 +36,7 @@ export default function Portfolio() {
     return () => el.removeEventListener("mousemove", onMove);
   }, []);
 
-  // Dev-only smoke tests (won't render anything)
+  // Dev-only smoke tests (will not render anything)
   useEffect(() => {
     try {
       if (typeof window !== "undefined") {
@@ -77,7 +83,7 @@ export default function Portfolio() {
           <div>
             <h1 className="text-5xl sm:text-6xl font-black tracking-tight leading-[1.05]">Tanmay Dabhade</h1>
             <p className="mt-4 text-lg max-w-xl leading-snug">
-              CS @ Michigan State · Front‑end & Systems · Building <Underline>Grata</Underline> with Voodoo.
+              CS @ Michigan State · Front-end & Systems · Building <Underline>Grata</Underline> with Voodoo.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href="#projects" className="group inline-flex items-center gap-2 rounded-full border border-black px-4 py-2 font-medium transition hover:-translate-y-0.5">
@@ -104,8 +110,8 @@ export default function Portfolio() {
             <TinyLink href="#projects">see more</TinyLink>
           </TiltCard>
           <TiltCard>
-            <h3 className="font-semibold">Front‑End Web Assistant — MSU CoE</h3>
-            <p className="mt-2 text-sm opacity-80">Internal web tooling for faculty/dept data · WCAG 2.1, SEO, CMS‑friendly.</p>
+            <h3 className="font-semibold">Front-End Web Assistant — MSU CoE</h3>
+            <p className="mt-2 text-sm opacity-80">Internal web tooling for faculty/dept data · WCAG 2.1, SEO, CMS-friendly.</p>
             <TinyLink href="#experience">experience</TinyLink>
           </TiltCard>
           <TiltCard>
@@ -127,15 +133,15 @@ export default function Portfolio() {
             bullets={[
               "Built & launched MVP in &lt; 3 weeks with RN + Firebase + Expo.",
               "Collaborated with Voodoo product on UX, retention, goals.",
-              "Private TestFlight; integrating real‑time user feedback.",
+              "Private TestFlight; integrating real-time user feedback.",
             ]}
           />
           <ExpRow
-            role="Front‑End Web Assistant — MSU College of Engineering (Aug 2025 – Present)"
+            role="Front-End Web Assistant — MSU College of Engineering (Aug 2025 – Present)"
             bullets={[
               "Internal archiving tool for faculty/dept data; accelerates migrations.",
               "Met WCAG 2.1, SEO, and CMS compatibility requirements.",
-              "Contributed to content migration & bug‑fixing during redesigns.",
+              "Contributed to content migration & bug-fixing during redesigns.",
             ]}
           />
           <ExpRow
@@ -151,8 +157,8 @@ export default function Portfolio() {
         <div className="mt-4 grid gap-6 md:grid-cols-3">
           <div className="md:col-span-2 text-sm leading-relaxed opacity-85">
             <p>
-              I build fast, minimal products with just‑enough motion: front‑end craft, systems thinking, and a bias for shipping.
-              Recent work: HFT‑style data pipeline in C++, MarketPulse (AI equity analysis), Autosense (EV telemetry sim).
+              I build fast, minimal products with just-enough motion: front-end craft, systems thinking, and a bias for shipping.
+              Recent work: HFT-style data pipeline in C++, MarketPulse (AI equity analysis), Autosense (EV telemetry sim).
             </p>
             <p className="mt-3">
               Tools I use a lot: Python, C/C++, JS/TS, React/Next, Swift, SQL, Pandas/NumPy. Also: Excel/Power BI for analysis
@@ -162,7 +168,7 @@ export default function Portfolio() {
           <div className="rounded-2xl border border-black/10 p-4 bg-gradient-to-br from-gray-50 to-white">
             <h3 className="font-semibold">Education</h3>
             <p className="mt-2 text-sm">B.S. in Computer Science — Michigan State University (Aug 2023 – May 2027)</p>
-            <p className="mt-1 text-xs opacity-70">Dean's List (Spring 2024) · Algorithms · Systems · Architecture</p>
+            <p className="mt-1 text-xs opacity-70">Dean&apos;s List (Spring 2024) · Algorithms · Systems · Architecture</p>
           </div>
         </div>
       </section>
@@ -178,7 +184,7 @@ export default function Portfolio() {
 }
 
 // ——— UI Bits ———
-function IconLink({ href, icon: Icon, children }: { href: string; icon: any; children: any }) {
+function IconLink({ href, icon: Icon, children }: IconLinkProps) {
   return (
     <a href={href} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 transition hover:-translate-y-0.5 active:translate-y-0">
       <Icon className="h-4 w-4" /> {children}
@@ -186,7 +192,7 @@ function IconLink({ href, icon: Icon, children }: { href: string; icon: any; chi
   );
 }
 
-function Underline({ children }: { children: any }) {
+function Underline({ children }: { children: ReactNode }) {
   return (
     <span className="relative inline-block">
       <span className="relative z-10">{children}</span>
@@ -202,7 +208,7 @@ function Underline({ children }: { children: any }) {
   );
 }
 
-function TinyLink({ href, children }: { href: string; children: any }) {
+function TinyLink({ href, children }: TinyLinkProps) {
   return (
     <a href={href} className="mt-3 inline-flex items-center gap-1 text-xs opacity-70 hover:opacity-100">
       {children} <ExternalLink className="h-3 w-3" />
@@ -210,7 +216,7 @@ function TinyLink({ href, children }: { href: string; children: any }) {
   );
 }
 
-function TiltCard({ children }: { children: any }) {
+function TiltCard({ children }: { children: ReactNode }) {
   return (
     <motion.article className="rounded-2xl border border-black/10 p-5 will-change-transform bg-white relative overflow-hidden" whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 200, damping: 18 }}>
       <div className="absolute inset-x-0 -top-1 h-[2px] bg-gradient-to-r from-transparent via-black/50 to-transparent opacity-60" />
@@ -219,7 +225,7 @@ function TiltCard({ children }: { children: any }) {
   );
 }
 
-function ExpRow({ role, bullets }: { role: string; bullets: string[] }) {
+function ExpRow({ role, bullets }: ExpRowProps) {
   return (
     <div className="py-6">
       <h3 className="font-semibold">{role}</h3>
@@ -234,20 +240,20 @@ function ExpRow({ role, bullets }: { role: string; bullets: string[] }) {
 
 // ——— Projects ———
 function Projects() {
-  const [repos, setRepos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState("");
-  const [lang, setLang] = useState("all");
+  const [repos, setRepos] = useState<Repo[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [query, setQuery] = useState<string>("");
+  const [lang, setLang] = useState<string>("all");
 
   useEffect(() => {
     const fetchRepos = async () => {
       try {
         const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`);
         const data = await res.json();
-        const filtered = (Array.isArray(data) ? data : [])
+        const filtered: Repo[] = (Array.isArray(data) ? data : [])
           .filter((r: any) => !r.fork)
           .map((r: any) => ({ id: r.id, name: r.name, description: r.description, stars: r.stargazers_count, url: r.html_url, lang: r.language }))
-          .sort((a: any, b: any) => (b.stars || 0) - (a.stars || 0));
+          .sort((a: Repo, b: Repo) => (b.stars || 0) - (a.stars || 0));
         setRepos(filtered);
       } catch (e) {
         console.error(e);
@@ -258,7 +264,7 @@ function Projects() {
     fetchRepos();
   }, []);
 
-  const fallback = useMemo(
+  const fallback: Repo[] = useMemo(
     () => [
       { name: "hft-pipeline", description: "Real-time C++ pipeline that ingests millions of ticks/sec.", stars: 0, url: "#", lang: "C++" },
       { name: "marketpulse", description: "AI-powered equity analysis (Next.js + Supabase + Clerk + Gemini).", stars: 0, url: "#", lang: "TypeScript" },
@@ -267,12 +273,12 @@ function Projects() {
     []
   );
 
-  const items = (repos.length ? repos : fallback)
-    .filter((p: any) => (lang === "all" || p.lang === lang))
-    .filter((p: any) => (query ? (p.name + " " + (p.description || "")).toLowerCase().includes(query.toLowerCase()) : true));
+  const items: Repo[] = (repos.length ? repos : fallback)
+    .filter((p) => (lang === "all" || p.lang === lang))
+    .filter((p) => (query ? (p.name + " " + (p.description || "")).toLowerCase().includes(query.toLowerCase()) : true));
 
-  const languages = useMemo(() => {
-    const set = new Set((repos.length ? repos : fallback).map((r: any) => r.lang).filter(Boolean));
+  const languages: string[] = useMemo(() => {
+    const set = new Set<string>((repos.length ? repos : fallback).map((r) => (r.lang || "")).filter(Boolean) as string[]);
     return ["all", ...Array.from(set)];
   }, [repos, fallback]);
 
@@ -293,16 +299,16 @@ function Projects() {
             className="h-9 rounded-full border border-black/15 px-3 text-sm outline-none focus:ring-2 focus:ring-black/60"
           >
             {languages.map((l) => (
-              <option key={l} value={l as string}>{l as string}</option>
+              <option key={l} value={l}>{l}</option>
             ))}
           </select>
         </div>
       </div>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading && <div className="sm:col-span-2 lg:col-span-3 text-sm opacity-60">Loading repositories…</div>}
-        {items.map((p: any, i: number) => (
+        {items.map((p, i) => (
           <motion.a
-            key={i}
+            key={p.id ?? i}
             href={p.url}
             target={p.url?.startsWith("http") ? "_blank" : undefined}
             rel="noreferrer noopener"
@@ -362,7 +368,7 @@ function TechTicker() {
 
 function HeroStats() {
   const stats = [
-    { k: "Time‑to‑MVP", v: "< 3 weeks" },
+    { k: "Time-to-MVP", v: "< 3 weeks" },
     { k: "Core Stacks", v: "RN / Next / Swift" },
     { k: "Focus", v: "Speed x UX" },
   ];
@@ -392,7 +398,7 @@ function CommandPalette() {
   }, []);
 
   if (!open) return null;
-  const actions = [
+  const actions: { label: string; run: () => void }[] = [
     { label: 'Scroll to Projects', run: () => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }) },
     { label: 'Scroll to Experience', run: () => document.querySelector('#experience')?.scrollIntoView({ behavior: 'smooth' }) },
     { label: 'Scroll to About', run: () => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }) },
