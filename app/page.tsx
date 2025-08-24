@@ -1,3 +1,4 @@
+'use client";'
 import { useEffect, useMemo, useRef, useState, ReactNode } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Star, Folder, Command, Download, ChevronRight } from "lucide-react";
