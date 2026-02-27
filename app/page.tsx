@@ -753,14 +753,14 @@ export default function Portfolio() {
                     <tr>
                       <td>ACCEPTING</td>
                       <td style={{ color: "var(--amber2)" }}>
-                        INTERNSHIP '25 · FULL-TIME '27 · INTERESTING COLLABS
+                        INTERNSHIP &apos;25 · FULL-TIME &apos;27 · INTERESTING COLLABS
                       </td>
                     </tr>
                     <tr>
                       <td>NOTE</td>
                       <td style={{ color: "var(--muted2)", fontStyle: "italic" }}>
-                        No cold pitch decks. No "10yr experience in a 2yr framework."
-                        Just a reasonable email and we'll figure it out.
+                        No cold pitch decks. No &quot;10yr experience in a 2yr framework.&quot;
+                        Just a reasonable email and we&apos;ll figure it out.
                       </td>
                     </tr>
                   </tbody>
